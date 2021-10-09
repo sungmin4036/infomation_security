@@ -1,0 +1,35 @@
+UDP Rat 악성코드가 성인 게임으로 위장해 웹하드를 통해 유포
+토렌트를 통해 njRAT이나 UDP Rat 같이 쉽게 구할 수 있는 악성코드들을 사용하며, 게임과 같은 정상 프로그램이나 성인물을 위장하여 악성코드들을 유포
+최근에는 njRAT 악성코드 대신 Simple UDP Rat과 같은 디도스(DDoS) 악성코드들을 주로 사용하는 것이 특징
+공격자는 해당 게시글 외에도 몇 개의 압축 파일들을 이용해 악성코드를 유포
+
+
+
+
+다운로드된 zip 압축 파일을 열어보면 다음과 같은 파일들을 확인할 수 있다. 이를 다운로드 받은 사용자는 게임 실행을 위해 ‘Game..exe’ 파일을 실행
+하지만 Game..exe는 게임 프로그램이 아니라 또 다른 악성코드를 실행시키는 런쳐 악성코드
+Dat 폴더에 존재하는 악성코드 stick.dat 파일을 실행하고, Ob.dat 파일을 Game.exe 이름으로 복사한 후 실행
+
+![image](https://user-images.githubusercontent.com/62640332/136647396-55034fc4-b230-4ad7-a13e-25f4de76ddaa.png)
+
+Game.exe로 복사되어 실행되는 파일은 실제 게임 프로그램으로, 이에 따라 사용자는 게임이 정상적으로 실행되었다고 인지
+ame..exe 파일을 숨김 속성으로 변경하기 때문에 사용자는 이후 복사된 게임 프로그램인 Game.exe를 사용
+별개로 런쳐 악성코드에 의해 실행되었던 stick.dat 파일은 ALZIP SFX 프로그램이며, 내부에 존재하는 2개의 악성코드 ‘Uninstall.exe’와 ‘op.gg.setup.apk’를 C:\Program iles\4.0389 폴더에 생성
+Stick.dat은 파일 생성 이후 Uninstall.exe를 실행하며, 또 다른 런쳐 악성코드인 Uninstall.exe는 op.gg.setup.apk를 실행한다. Op.gg.setup.apk는 다운로더 악성코드이며, 다음 주소에서 동일 경로에 Op.gg.exe 파일을 다운로드 받고 실행
+
+![image](https://user-images.githubusercontent.com/62640332/136647423-ef6d0e3b-3208-48ba-8b02-43e1478d6600.png)
+
+# 다운로드 주소 :
+hxxps://cdn.discordapp[.]com/attachments/872548745902948365/889723452569845830/Op.gg.exe
+
+Op.gg.exe는 자신을 Run 키에 등록하며 정상 프로그램인 ‘SMSvcHost.exe’를 실행하고 원본 악성코드를 인젝션한다. SMSvcHost.exe에 인젝션된 원본 악성코드는 다운로더 악성코드로서 주기적으로 명령제어(C&C) 서버에 접속해 추가적으로 다운로드할 악성코드의 주소를 구함
+
+#C&C 주소 :
+hxxp://ondisk.kibot[.]pw:8080/links/UserTwo
+
+![image](https://user-images.githubusercontent.com/62640332/136647523-331ecd3a-12fc-41b9-b95c-8da6533e3b86.png)
+
+C&C 서버로부터 추가 악성코드 주소를 획득한 경우에는 아래와 같이 C:\Steam_Kr\ 폴더의 sys_[랜덤] 폴더에 추가 악성코드들을 다운로드하고 실행
+
+![image](https://user-images.githubusercontent.com/62640332/136647539-a66dd079-62c1-4291-9829-105010a08e7e.png)
+
