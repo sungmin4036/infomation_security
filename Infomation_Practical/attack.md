@@ -8,12 +8,9 @@
 서버가 정확히 설정하는 것이 중요
 - Type: text, image, audio, video, application
 
-Image Type: image/ gif, jpeg, png, svg+xml
-
+>Image Type: image/ gif, jpeg, png, svg+xml
 Aduio Type: audtio/ wave, wav, x-wav, x-pn-wav, webm, ogg
-
 Video Type: video/ webm, ogg
-
 Application Type: application/ ogg
 
 <br>
