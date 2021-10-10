@@ -1,5 +1,7 @@
 ***
-###ㅁ MIME 타입   
+
+### ㅁ MIME 타입   
+
 ***
 : MIME 타입이란 클라이언트에게 전송된 문서의 다양성을 알려주기 위한 메커니즘   
 웹에서 파일의 확장자는  의미X 각 문서와 함께 올바른 MIME 타입을 전송하도록, 
@@ -17,12 +19,12 @@ Application Type: application/ ogg
 
 ***
 
-####ㅁ ARP Spoofing
+#### ㅁ ARP Spoofing
 : ARP 프로토콜을 이용하여 동일 네트워크에 존재하는 두 Victim의 ARP 테이블에서 두 Victim의 IP에 대한 MAC주소를 Attacker자신의 MAC주소로 바꾸는 공격이다.
 
 ***
 
-####ㅁ ARP Redirect
+#### ㅁ ARP Redirect
 : ARP Spoofing에서 속이는 대상을 게이트웨이로 한 것이다.
  Victim은 Attacker가 Gateway인 줄 알고 외부로 통신할 때 Attacker에게 패킷을 보내기 때문에 외부로 나가는 패킷을 Sniffing할 수 있다.
 
