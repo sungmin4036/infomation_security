@@ -9,9 +9,9 @@
 - Type: text, image, audio, video, application
 
 >Image Type: image/ gif, jpeg, png, svg+xml
-Aduio Type: audtio/ wave, wav, x-wav, x-pn-wav, webm, ogg
-Video Type: video/ webm, ogg
-Application Type: application/ ogg
+>Aduio Type: audtio/ wave, wav, x-wav, x-pn-wav, webm, ogg
+>Video Type: video/ webm, ogg
+>Application Type: application/ ogg
 
 <br>
 
