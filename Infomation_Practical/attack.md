@@ -7,9 +7,13 @@
 웹에서 파일의 확장자는  의미X 각 문서와 함께 올바른 MIME 타입을 전송하도록, 
 서버가 정확히 설정하는 것이 중요
 - Type: text, image, audio, video, application
+
 Image Type: image/ gif, jpeg, png, svg+xml
+
 Aduio Type: audtio/ wave, wav, x-wav, x-pn-wav, webm, ogg
+
 Video Type: video/ webm, ogg
+
 Application Type: application/ ogg
 
 <br>
