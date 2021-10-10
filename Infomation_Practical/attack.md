@@ -9,24 +9,34 @@ Image Type: image/ gif, jpeg, png, svg+xml
 Aduio Type: audtio/ wave, wav, x-wav, x-pn-wav, webm, ogg
 Video Type: video/ webm, ogg
 Application Type: application/ ogg
+
 <br>
+
 - 서버측에 있는 프로그램을 서버 사이드 프로그램
 - 서버 사이드 스크립트는 프로그램 중에서도 스크립트 형태의 프로그램
+
 ***
+
 ####ㅁ ARP Spoofing
 : ARP 프로토콜을 이용하여 동일 네트워크에 존재하는 두 Victim의 ARP 테이블에서 두 Victim의 IP에 대한 MAC주소를 Attacker자신의 MAC주소로 바꾸는 공격이다.
+
 ***
+
 ####ㅁ ARP Redirect
 : ARP Spoofing에서 속이는 대상을 게이트웨이로 한 것이다.
  Victim은 Attacker가 Gateway인 줄 알고 외부로 통신할 때 Attacker에게 패킷을 보내기 때문에 외부로 나가는 패킷을 Sniffing할 수 있다.
+
 ***
- #### ㅁ ICMP Redirect
+
+#### ㅁ ICMP Redirect
  : 라우터가 송신 측 호스트에 적합하지 않은 경로로 되어 있으면 해당 호스트에 대한 최적 경로를 다시 지정해주는 ICMP Type (이를 악용하면 패킷을 가로채는 것이 가능.)
+
 ***
  #### ㅁ SSL/TLS
  - SSL(Secure Sockets Layer)
  - TLS(Transport Layer Escurity)
 : 네트워크 통신 환경에서 주고받는 데이터를 암호화 해주는 규약(다양한 애플리케이션에서 암호화된 통신을 위해 사용)
+
 ㅁ SSL/TLS 주요 보안 이슈
 > o HEIST(HTTP Encrypted Information can be Stolen through  공격 (2016년 8월, Black Hat 발표)
 >>: 브라우저에 대한 사이드-채널 공격(side-channel attack)(8)을 통해 SSL/TLS로 암호화된 데이터의 정확한 크기를 알아내는 공격   
