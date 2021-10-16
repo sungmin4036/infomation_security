@@ -1,15 +1,16 @@
 ***
 #### ㅁ Snort 
 ***
+
 Snort Rule
 1. Rule Header: Action, Protocol, IP address, port, etc...
 2. Rule Option: 탐지 조건
 
 Action
->- alert: alert를 발생시키고 탐지 정보를 로그파일에 기록
->- log: 패킷에 대해서 로그를 기록
->- pass: 패킷을 무시
->- dynamic: activate 시그니처에 의해서 유효하게 된 경우는 한쪽의 패킷을 기록
+> - alert: alert를 발생시키고 탐지 정보를 로그파일에 기록
+> - log: 패킷에 대해서 로그를 기록
+> - pass: 패킷을 무시
+> - dynamic: activate 시그니처에 의해서 유효하게 된 경우는 한쪽의 패킷을 기록
 
 Protocol
 > - TCP, UDP, IP, ICMP
@@ -23,23 +24,23 @@ Direction
 > 
 ---
 Rule Option
->- msg: alert 발생시 msg가 설정된 문장을 로그파일에 기록
->- sid: 시그니처 아이디 지정, 0~99는 예약되있음, 100 ~ 1,000,000은 snort.org에서 공식저으로 배포하는 룰
->- dsize: 전송되는 패킷의 사이즈 식별 ex) dsize100<>500  ==>  100~500 바이트 탐지
->- nocase: 대소문자 구분X
->- offset : 지정한 byte 부터 탐색
->- depth : 지정한 byte 까지 탐색
->ex)alert tcp any any -> any 80 (content:"cgi-bin/phf"; offset:4; depth:20;)    //앞에 content가 필요
->- distance : content 매핑 후 지정한 위치 이후 동일한 content 탐색
+> - msg: alert 발생시 msg가 설정된 문장을 로그파일에 기록
+> - sid: 시그니처 아이디 지정, 0~99는 예약되있음, 100 ~ 1,000,000은 snort.org에서 공식저으로 배포하는 룰
+> - dsize: 전송되는 패킷의 사이즈 식별 ex) dsize100<>500  ==>  100~500 바이트 탐지
+> - nocase: 대소문자 구분X
+> - offset : 지정한 byte 부터 탐색
+> - depth : 지정한 byte 까지 탐색
+> ex)alert tcp any any -> any 80 (content:"cgi-bin/phf"; offset:4; depth:20;)    //앞에 content가 필요
+> - distance : content 매핑 후 지정한 위치 이후 동일한 content 탐색
 >ex)alert tcp any any -> any any (content:"ABC"; content:"DEF"; distance:1;)  // ABC를 찾고 1byte 건너 뛰고 DEF 검색
->- within : content 매핑 후 지정한 위치 이내 동일한 content 탐색
+> - within : content 매핑 후 지정한 위치 이내 동일한 content 탐색
 >ex)alert tcp any any -> any any (content:"ABC"; content:"EFG"; within:10;)  // ABC 다음 10byte 내에서 EFG 검색
 
 content 사용방법
->- 텍스트: content: "/bin/bash";
->- 바이너리: content: "|AA AB AF|";
->- 혼합: content: "|AA AB| /bin/bash";
->- 패턴 매칭 옵션
+> - 텍스트: content: "/bin/bash";
+> - 바이너리: content: "|AA AB AF|";
+> - 혼합: content: "|AA AB| /bin/bash";
+> - 패턴 매칭 옵션
 >> -- !: 입력한 값과 일치하지 않을시 탐지 ex) content: !"google";
 >> -- |: hax값 표현시 사용     ex) conetnt:"|30|"; 
 >>  \\: 특수 기호 탐지시 사용 ex) contetnt: "\ google\|;
@@ -52,134 +53,150 @@ flags
 flow
 :TCP를 재조립하여 동작하는것
 >- to_server, to_client, from_server, from_client를 사용해서 전송되는 곳 지정
->ex) flow:established;
+> ex) flow:established;
 
 itype 과 inode
 :ICMP 프로토콜은 네트워크 오류 감시하는 프로토콜
->- ICMP Echo Request, ICMP Echo Reply
->ex) alter icmp any any -> any any (itype: 0 ; msg "ICMP echo Reply" ; sid:1000000797;)
+> - ICMP Echo Request, ICMP Echo Reply
+> ex) alter icmp any any -> any any (itype: 0 ; msg "ICMP echo Reply" ; sid:1000000797;)
 
 sameip
 :송신자와 수신자의 IP동일한것 탐지
->ex) alert tcp any any -> 172.16.100.5/24 (msg:"Land Attack!"; sameip;)
+> ex) alert tcp any any -> 172.16.100.5/24 (msg:"Land Attack!"; sameip;)
 
 session
 :시그니처 확인하면 로그기록
->ex)<mark>log</mark> tcp any any -> any 110 <mark>(session:printable;)
+> ex)<mark>log</mark> tcp any any -> any 110 <mark>(session:printable;)
 
 threshold
 threshold:type <threshold|limit|both>,track <by src|by dst>, count \<c>, second \<s>
->- threshold  :  매 s초 동안 c 번째 이벤트 마다 action 수행
->- limit  :  매 s초 동안 c 번째 이벤트까지 action 수행
->- both  :  매 s초 동안 c 번째 이벤트 시에 한번 action 수행
->- by src | by dst :  src 또는 dst IP 기준으로 탐색
->- count | second  :  횟수와 시간
->ex1) alert icmp any any -> 192.168.11.45 any (msg:"ICMP TEST";threshold:type threshold,track by dst,count 10,seconds 1;sid:10000001; rev:001;)   //동일 IP로 icmp 패킷이 1초에 10번 이상 전달되면 10번 마다 경고
->ex2) alert icmp any any -> any any (msg:"ICMP";threshold thpe both,track by_src,count 5,seconds 20; sid:100000747;
+> - threshold  :  매 s초 동안 c 번째 이벤트 마다 action 수행
+> - limit  :  매 s초 동안 c 번째 이벤트까지 action 수행
+> - both  :  매 s초 동안 c 번째 이벤트 시에 한번 action 수행
+> - by src | by dst :  src 또는 dst IP 기준으로 탐색
+> - count | second  :  횟수와 시간
+
+> - limit 
+> limit은 seconds <s> 동안 count <c>만큼 까지만 로그를 발생시킨다.
+> threshold: type threshold, track by_src, count 7, seconds 60
+> 60초 동안 출발지를 기준으로 7번 까지만 탐지되며, 1분 동안 8번 초과하는 로그는 발생시키지 > 않는다.
+
+> - threshold
+> threshold는 seconds <s> 동안 count<c>가 달성될 때마다 로그를 발생시킨다.
+> threshold: type threshold, track by_src, count 7, seconds 60
+> 60초동안 7번의 카운트 될때마다 로그를 발생시키기 때문에 2번의 로그가 발생한다.
+
+
+> - both
+> both는 limit과 threshold의 결합이다.
+> threshold: type both, track by_dst, count 7, seconds 60
+> 60초 동안 목적지를 기준으로 7번 카운트 되었을 때 단 한번의 로그만 발생한다. 초과 패킷은 > alert 하지 않으며, 14번 카운트 되더라도 로그를 남기지 않는다.
 
 ***
-####ㅁ apache httpd.conf 설정
+
+#### ㅁ apache httpd.conf 설정
+
 ***
 - ServerType   Standalone
-:서버 타입을 설정하는 지시자 이다. 
->ServerType 에서 설정할 수 있는 것은 Standalone 과 inetd 두가지 설정이 있다.
+: 서버 타입을 설정하는 지시자 이다. 
+> ServerType 에서 설정할 수 있는 것은 Standalone 과 inetd 두가지 설정이 있다.
 
 - ServerRoot  /usr/local/apache
-:아파치 서버의 루트 디렉토리를 설정한다.
+: 아파치 서버의 루트 디렉토리를 설정한다.
 
 - PidFile  /usr/local/apache/logs/httpd.pid 
-:아파치가 실행될 때 생성되는 httpd.pid 파일이 생성될 경로를 지정한다.
+: 아파치가 실행될 때 생성되는 httpd.pid 파일이 생성될 경로를 지정한다.
 
 - ScoreBoardFile  /usr/local/apache/logs/httpd.scoreboard
-:부모 프로세스가 자식 프로세스와 의사 소통을 할 때 사용되는 지시자와 그 파일을 지정한다.
+: 부모 프로세스가 자식 프로세스와 의사 소통을 할 때 사용되는 지시자와 그 파일을 지정한다.
 
 - Timeout    300
-:Timeout은 클라이언트에서 서버로 접속할 때 클라이언트나 서버의 통신장애로 인해 300초 동안 클라이언트에서 완벽한 처리를 하지 못할 때 클라이언트와의 연결을 해제한다.
+: Timeout은 클라이언트에서 서버로 접속할 때 클라이언트나 서버의 통신장애로 인해 300초 동안 클라이언트에서 완벽한 처리를 하지 못할 때 클라이언트와의 연결을 해제한다.
 
 - KeepAlive  On
-:서버와의 지속적인 연결을 하도록 설정되어 있다. 즉 한번의 연결에 대해 한번의 요청만 처리하는 것이 아니라 또 다른 요청을 기다리게 된다. 하지만 지속적인 연결 시간은 KeepAliveTimeout 값에 설정한 만큼 유지된다. KeepAlive를 Off로 설정하게 되면 클라이언트로 부터 한번의 요청을 받은 후 바로 접속을 해제한다. 
+: 서버와의 지속적인 연결을 하도록 설정되어 있다. 즉 한번의 연결에 대해 한번의 요청만 처리하는 것이 아니라 또 다른 요청을 기다리게 된다. 하지만 지속적인 연결 시간은 KeepAliveTimeout 값에 설정한 만큼 유지된다. KeepAlive를 Off로 설정하게 되면 클라이언트로 부터 한번의 요청을 받은 후 바로 접속을 해제한다. 
 \# 특별한 경우가 아니라면 On 상태로 유지하는 것이 좋다.
 
 - MaxKeepAliveRequests    100
-:KeepAlive 상태에서 처리할 최대 요청 처리 건수를 설정한다. 
+: KeepAlive 상태에서 처리할 최대 요청 처리 건수를 설정한다. 
 \# 보통의 웹 사이트에서는 설정값 100으로 충분하다.
 
 - KeepAliveTimeout   15
-:KeepAlive 상태를 유지할 시간을 초 단위로 설정한다.
+: KeepAlive 상태를 유지할 시간을 초 단위로 설정한다.
 
 - MinSpareServers   5
-:아파치가 실행될 때 최소 예비 프로세스 수를 설정한다. 이 값에 의해 현재 nobody 소유의 아파치 프로세스가 5보다 작을 경우 자동으로 부족한 만큼의 아파치 프로세스 생성한다.
+: 아파치가 실행될 때 최소 예비 프로세스 수를 설정한다. 이 값에 의해 현재 nobody 소유의 아파치 프로세스가 5보다 작을 경우 자동으로 부족한 만큼의 아파치 프로세스 생성한다.
 \# 8 정도 설정하는 것이 적당하다.
 
 - MaxSpareServers  10
-:아파치가 실행될 때 최대 예비 프로세스 수를 설정한다. 이 값에 의해 현재 nobody 소유의 아파치 프로세스가 10보다 클 경우 불필요한 프로세스를 제거한다. 
+: 아파치가 실행될 때 최대 예비 프로세스 수를 설정한다. 이 값에 의해 현재 nobody 소유의 아파치 프로세스가 10보다 클 경우 불필요한 프로세스를 제거한다. 
 \# 20 정도 설정하는 것이 적당하다.
 
 - StartServers   5
-:아파치가 실행될 때 생성 시키는 자식 프로세스 수이다.  하지만 이 값이 MinSpareServers 값보다 작을 경우 아파치 실행 후에 바로 MinSpareServers 의 설정만큼 생성하기 때문에 아무런 의미가 없게 된다. 
+: 아파치가 실행될 때 생성 시키는 자식 프로세스 수이다.  하지만 이 값이 MinSpareServers 값보다 작을 경우 아파치 실행 후에 바로 MinSpareServers 의 설정만큼 생성하기 때문에 아무런 의미가 없게 된다. 
 \# StartServer 값과 MinSpareServers 값은 같은 값을 설정하는것이 바람직하다.
 
 - MaxClients   150
- 아파치 서버의 동시 접속자 수를 정의한다. 
+: 아파치 서버의 동시 접속자 수를 정의한다. 
  \# 최대 값은 256이다.  256 이상의 값을 설정하고 싶을 때는 아파치 소스의 httpd.h 헤어 파일의 ARD_SERVER_LIMIT 부분을 수정하고 아파치를 다시 컴파일 해야 된다.
 
 - MaxRequestsPerChild   0
-:아파치의 자식 프로세스가 처리할 수 있는 최대 요청 처리 건수를 설정한다.
+: 아파치의 자식 프로세스가 처리할 수 있는 최대 요청 처리 건수를 설정한다.
 \# 0 은 무제한을 뜻한다.
 
 - BindAddress   *
-:가상 호스트를 지워한다. 기본적으로 주석 처리 되어 있지만 실제로는 가상 호스트에 영향을 주지 않았다.
+: 가상 호스트를 지워한다. 기본적으로 주석 처리 되어 있지만 실제로는 가상 호스트에 영향을 주지 않았다.
 
 - Port      80
-:아파치가 사용할 기본 포트를 지정한다. 
+: 아파치가 사용할 기본 포트를 지정한다. 
 
 - User   nobody
 - Group  nobody
-:자식 프로세스가 생성될 때 그 프로세스의 소유자와 소유그룹을 결정한다. 
+: 자식 프로세스가 생성될 때 그 프로세스의 소유자와 소유그룹을 결정한다. 
 \# 보안상 절대 root 로 설정하는 일은 없도록 한다.
 
 - ServerAdmin    admin@rootman.co.kr
-:아파치 서버 관리자 e-mail을 설정하는 부분이다.
+: 아파치 서버 관리자 e-mail을 설정하는 부분이다.
 
 - ServerName    rootman.co.kr
-:아파치 서버가 작동중인 서버 이름을 설정한다. 기본적으로 주석 처리 되어 있다.
+: 아파치 서버가 작동중인 서버 이름을 설정한다. 기본적으로 주석 처리 되어 있다.
 도메인이 아닌 IP 주소로 사용자의 홈페이지에 접속할 때 URL 끝에 /를 붙여야 접속이 되는 경우가 있는데 이럴 경우# ServerName 지시자에 주석을 제거 하고 아이피 주소를 설정해 주면 된다.
 
 - DocumentRoot    "/usr/local/apache/htdocs"
-:아파치의 웹 문서들의 루트 디렉토리를 지정한다.
+: 아파치의 웹 문서들의 루트 디렉토리를 지정한다.
 아래 부터 디렉토리 제어이다.  Directory 구문에 대한 자세한 설명은 아래에 있다.
 시스템 루트( / ) 디렉토리에 대한 제어
-><Directory />                                              
-    Options FollowSymLinks                         
-    AllowOverride None                                
-</Directory>                                              
+> \<Directory />                                              
+> \   Options FollowSymLinks                         
+> \   AllowOverride None                                
+> \</Directory>                                              
 
 /usr/local/apache/htdocs 디렉토리에 대한 제어
-><Directory   " /usr/local/apache/htdocs">     
-    Options Indexes FollowSymLinks MultiViews
-    AllowOverride None
-    Order allow,deny
-    Allow from all
-</Directory>
+> \<Directory   " /usr/local/apache/htdocs">     
+> \    Options Indexes FollowSymLinks MultiViews
+> \    AllowOverride None
+> \    Order allow,deny
+> \    Allow from all
+> \</Directory>
 
 사용자 홈 디렉토리인 public_html 디렉토리에 대한 제어
-><Directory /home/*/public_html>
-   AllowOverride FileInfo AuthConfig Limit
-   Options MultiViews Indexes SymLinksIfOwnerMatch IncludesNoExec
-   <Limit GET POST OPTIONS PROPFIND>
-       Order allow,deny
-       Allow from all
-   </Limit>
-   <LimitExcept GET POST OPTIONS PROPFIND>
-       Order deny,allow
-       Deny from all
-   </LimitExcept>
-</Directory>
+> \<Directory /home/*/public_html>
+> \   AllowOverride FileInfo AuthConfig Limit
+> \   Options MultiViews Indexes SymLinksIfOwnerMatch IncludesNoExec
+> \   <Limit GET POST OPTIONS PROPFIND>
+> \       Order allow,deny
+> \       Allow from all
+> \   </Limit>
+> \   <LimitExcept GET POST OPTIONS PROPFIND>
+> \       Order deny,allow
+> \       Deny from all
+> \   </LimitExcept>
+> \</Directory>
 
 디렉토리 제어와 관련된 설정과 옵션 설명 디렉토리 제어문의 시작은 <Directory   DIR_Path> 로 시작해서 </Directory> 로 끝난다. 
 
 ####  Options(옵션) 설명
-옵션 구문은 Options 라는 키워드로 시작된다.
+: 옵션 구문은 Options 라는 키워드로 시작된다.
 - FollowSymLinks : 실볼릭 링크를 허용한다.
 - SymLinksIfOwnerMatch : 링크를 허용하지만 링크 하고자 하는 사용자의 소유로 되어 있는 것만 링크 가능하다.
 - ExecCGI : CGI 실행을 허용한다.
@@ -209,31 +226,32 @@ threshold:type <threshold|limit|both>,track <by src|by dst>, count \<c>, second 
 --> Options, XBitHack등을 사용할 수 있다.
 AloowOverride와 AccessFileName에 설정한 파일을 이용해서 아파치 인증 기능을 사용할 수 있다.
 아파치 인증에 관한 자세한 설명은 "아파치 인증" 강좌를 참고하길 바란다. 
+
 ---
 
 - DirectoryIndex     index.html
-:파일 이름을 명시하지 않고 디렉토리에 접근할 경우 자동으로 보여줄 파일 이름을 설정한다. 
+: 파일 이름을 명시하지 않고 디렉토리에 접근할 경우 자동으로 보여줄 파일 이름을 설정한다. 
 여러개의 파일 이름을 설정할 수 있다. 파일 이름에 대한 구분은 Space 키,  즉 빈 공간으로 구분한다.
 
 - AccessFileName    .htaccess
-:특정 디렉토리의 접근 제어를 할 파일 이름을 정의한다.
+: 특정 디렉토리의 접근 제어를 할 파일 이름을 정의한다.
 단, 해당 디렉토리의 AllowOverride 에서 None으로 설정되어 있지 않아야 된다.
 자세한 설명은 "아파치 인증" 강좌 참고
 
 - CacheNegotiatedDocs
-:프록시 서버에 문서를 캐시하도록 설정한다. 기본적으로 주석 처리 되어 있다.
+: 프록시 서버에 문서를 캐시하도록 설정한다. 기본적으로 주석 처리 되어 있다.
 
 - HostnameLookup    Off
-:아파치의 로그 파일에는 기본적으로 클라이언트의 IP 주소 정보가 기록되는데 이 설정을 On 하면 호스트 네임(도메인) 이 기록된다. 하지만 DNS 질의를 해야 되므로 속도가 느리다는 단점이 있다. 
+: 아파치의 로그 파일에는 기본적으로 클라이언트의 IP 주소 정보가 기록되는데 이 설정을 On 하면 호스트 네임(도메인) 이 기록된다. 하지만 DNS 질의를 해야 되므로 속도가 느리다는 단점이 있다. 
 \# 그냥  Off로 사용하는것을 추천한다.
 
 - ErrorLog   /usr/local/apache/logs/error_log
-:아파치 서버 접속 에러 로그를 기록할 결로와 파일 이름을 설정한다.
+: 아파치 서버 접속 에러 로그를 기록할 결로와 파일 이름을 설정한다.
 
 - LogLevel   warn
 : 에러 로그 내용의 레벨을 설정한다.
 
->LogFormat "%h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-Agent}i"" combined
+> LogFormat "%h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-Agent}i"" combined
 LogFormat "%h %l %u %t "%r" %>s %b" common
 LogFormat "%{Referer}i -> %U" referer
 LogFormat "%{User-agent}i" agent   
@@ -247,144 +265,146 @@ LogFormat "%{User-agent}i" agent
            접속자에 대한 많은 정보를 기록하길 원한다면 combined으로 설정하면 된다.
 \# %h %I 등과 같은 아파치 로그 포멧을 알고 싶으면 아파치 메뉴얼를 참고 하기 바란다.
 - CustomLog    /usr/local/apache/logs/access_log common
-:로그 파일의 경로와 파일 이름,  그리고 로그의 포맷을 설정한다. 
+: 로그 파일의 경로와 파일 이름,  그리고 로그의 포맷을 설정한다. 
  common 이외에 위에서 정의한 로그 포멧을 지정할 수 있다.
 
 - ServerSignature  On
-:apache 서버가 생성하는 Error 페이지와 Ftp 디렉토리 목록, mod_status, mod_info 등에 apache 서버 버젼과 가상 호스트 네임을 추가적으로 표시해 준다.(On 설정시)  Email 설정시 ServerAdmin의 E-mail 주소를 페이지에 링크해 준다. 
+: apache 서버가 생성하는 Error 페이지와 Ftp 디렉토리 목록, mod_status, mod_info 등에 apache 서버 버젼과 가상 호스트 네임을 추가적으로 표시해 준다.(On 설정시)  Email 설정시 ServerAdmin의 E-mail 주소를 페이지에 링크해 준다. 
 \# On, Off, Email을 설정해서 사용할 수 있다. 
 
 - Alias  /icons/  "/usr/local/apache/icons/"
-:특정 디렉토리를 alias 한다. 위의 경우는 /usr/local/apache/icons/ 디렉토리를 icons 라는 이름으로 alias 한것이다 
+: 특정 디렉토리를 alias 한다. 위의 경우는 /usr/local/apache/icons/ 디렉토리를 icons 라는 이름으로 alias 한것이다 
 \# icons 디렉토리 앞의 /(슬래쉬)는 DocumentRoot를 의미한다. 
 
 - ScriptAlias  /cgi-bin/  "/usr/local/apache/cgi-bin/"
-:Alias와 같은 형식이고 실행할 스크립트 디렉토리를 alias할 때 사용한다. 
+: Alias와 같은 형식이고 실행할 스크립트 디렉토리를 alias할 때 사용한다. 
 
 - Redirect  old-URL  new-URL
-:old-URL을 new-URL로 코딩해준다. 하지만 HTML태그로 위의 기능을 대신할 수 있기때문에 사용할 일이 거의 없을것이다. 
+: old-URL을 new-URL로 코딩해준다. 하지만 HTML태그로 위의 기능을 대신할 수 있기때문에 사용할 일이 거의 없을것이다. 
 
 
 
 - IndexOptions Fancy Indexing
-:디렉토리에 DirectoryIndex에 설정된 파일명이 없을경우 아파치서버는 디렉토리목록을 보여주는데 Fancy Indexing을 설정 할 경우 파일의 크기, 생성날짜 등을 같이 출력해준다.
+: 디렉토리에 DirectoryIndex에 설정된 파일명이 없을경우 아파치서버는 디렉토리목록을 보여주는데 Fancy Indexing을 설정 할 경우 파일의 크기, 생성날짜 등을 같이 출력해준다.
 
 - DefaultIcon /icons/unknown.gif
-:아이콘이 설정되어 있지 않은 파일 확장자들의 아이콘을 대신한다
+: 아이콘이 설정되어 있지 않은 파일 확장자들의 아이콘을 대신한다
 
->AddDescription "GZIP compressed document"  .gz
-AddDescription "tar archive"  .tar
-AddDescription "GZIP compressed tar archive" .tgz
+> AddDescription "GZIP compressed document"  .gz
+> AddDescription "tar archive"  .tar
+> AddDescription "GZIP compressed tar archive" .tgz
 
-:아파치가 디렉토리 목록을 보여줄 경우 파일 확장자에 대해 간략한 설명을 할 수 있게 한다. 단, IndexOptions에서 FancyIndexing이 적용되어 있어야 된다.
+: 아파치가 디렉토리 목록을 보여줄 경우 파일 확장자에 대해 간략한 설명을 할 수 있게 한다. 단, IndexOptions에서 FancyIndexing이 적용되어 있어야 된다.
 
->ReadmeName README
-HeaderName HEADER
+> ReadmeName README
+> HeaderName HEADER
 
-:아파치가 디렉토리가 목록을 보여줄 경우 페이지 위(HEADER)와 아래(README)에 추가로 출력할 텍스트들을 설정할 수 있다.
+: 아파치가 디렉토리가 목록을 보여줄 경우 페이지 위(HEADER)와 아래(README)에 추가로 출력할 텍스트들을 설정할 수 있다.
 각 디렉토리에 README, HEADER 라는 이름으로 텍스트 파일을 만들면 된다.
 
->ErrorDocument 500  "The server made a boo bo"
-ErrorDocument 404  /missing.html
-ErrorDocument 402  http://some.other_server.com/subscription_info.html 
+> ErrorDocument 500  "The server made a boo bo"
+> ErrorDocument 404  /missing.html
+> ErrorDocument 402  http://some.other_server.com/subscription_info.html 
 
-:클라이언트의 요구에 의해 발생하는 아파치 서버의 에러페이지에 출력할 텍스트나 문서를 정의할 수 있다. 
+: 클라이언트의 요구에 의해 발생하는 아파치 서버의 에러페이지에 출력할 텍스트나 문서를 정의할 수 있다. 
 각 페이지는 에러 코드별로 설정할 수 있으며 외부의 URL을 지정할 수도 있다.
 문자열을 설정을 경우네는 " "안에 문자열을 설정하면 되고 내부 html 문서를 지정해줄 경우에는 문서의 경로를 지정해 주면 된다. 단, (/)최상위 경로는 DocumentRoot를 의미한다.
 
-><Location /server-status>
-   SetHandler server-status
-   Order deny,allow
-   Deny from all
-   Allow from .your_domain.com
-</Location>
-<Location /server-info>
-   SetHandler server-info
-   Order deny,allow
-   Deny from all
-   Allow from .your_domain.com
-</Location>          
+> \<Location /server-status>
+> \   SetHandler server-status
+> \   Order deny,allow
+> \   Deny from all
+> \   Allow from .your_domain.com
+> \</Location>
+> \<Location /server-info>
+> \   SetHandler server-info
+> \   Order deny,allow
+> \   Deny from all
+> \   Allow from .your_domain.com
+> \</Location>          
 
 위의 설정을 함으로써 웹 브라우저에서 아파치 서버의 상태와 정보를 볼수 있다. 보안상 특정 호스트에서만 볼 수 있게 설정할 수 있으며 기본적으로 주석 처리되어 있다.
 
-><Location /cgi-bin/phf*>
-    Deny from all
-    ErrorDocument 403 http://phf.apache.org/phf_abuse_log.cgi
-</Location>
+> \<Location /cgi-bin/phf*>
+> \    Deny from all
+> \    ErrorDocument 403 http://phf.apache.org/phf_abuse_log.cgi
+> \</Location>
 
 아파치 1.1 이전 버젼의 버그를 악용하는 경우가 있는데 이 설정에 해 두면 이러한 공격을 phf.apache.org의 로깅 스키립트로 리다이렉트 시켜준다. 요즘은 필요없는 설정이고 위의 URL에 cgi스크립트가 존재하지도 않는다.
 
 - DefaultType text/plain
-아파치가 처리할 기본 문서들을 정의한다. 위의 설정은 html과 text 파일을 포함시킨 것이다.
+: 아파치가 처리할 기본 문서들을 정의한다. 위의 설정은 html과 text 파일을 포함시킨 것이다.
 위의 설정 때문에 text 파일도 웹 브라우저에 표시해 줄수 있는 것이다.
+
 ***
-[Linux] iptables 설정
+#### [Linux] iptables 설정
 ***
+
 iptable
 - table: filter, nat, mangle, raw
 - chain: INPUT, OUTPUT, FORWARD // ACCEPT, REJECT, DROP
 
 chain
->- INPUT : 호스트 컴퓨터를 향한 모든 패킷
->- OUTPUT : 호스트 컴퓨터에서 발생하는 모든 패킷
->- FORWARD : 호스트 컴퓨터가 목적지가 아닌 모든 패킷, 즉 라우터로 사용되는 호스트 컴퓨터를 통과하는 패킷
+> - INPUT : 호스트 컴퓨터를 향한 모든 패킷
+> - OUTPUT : 호스트 컴퓨터에서 발생하는 모든 패킷
+> - FORWARD : 호스트 컴퓨터가 목적지가 아닌 모든 패킷, 즉 라우터로 사용되는 호스트 컴퓨터를 통과하는 패킷
 
 명령어
->- A (--append) : 새로운 규칙을 추가.
->- D (--delete) : 규칙을 삭제.
->- C (--check) : 패킷을 테스트.
->- R (--replace) : 새로운 규칙으로 교체.
->- I (--insert) : 새로운 규칙을 삽입.
->- L (--list) : 규칙을 출력.
->- F (--flush) : chain으로부터 규칙을 모두 삭제.
->- Z (--zero) : 모든 chain의 패킷과 바이트 카운터 값을 0으로 만듬.
->- N (--new) : 새로운 chain을 만듬.
->- X (--delete-chain) : chain을 삭제.
->- P (--policy) : 기본정책을 변경.
+> - A (--append) : 새로운 규칙을 추가.
+> - D (--delete) : 규칙을 삭제.
+> - C (--check) : 패킷을 테스트.
+> - R (--replace) : 새로운 규칙으로 교체.
+> - I (--insert) : 새로운 규칙을 삽입.
+> - L (--list) : 규칙을 출력.
+> - F (--flush) : chain으로부터 규칙을 모두 삭제.
+> - Z (--zero) : 모든 chain의 패킷과 바이트 카운터 값을 0으로 만듬.
+> - N (--new) : 새로운 chain을 만듬.
+> - X (--delete-chain) : chain을 삭제.
+> - P (--policy) : 기본정책을 변경.
 
 매치
->- --source (-s) : 출발지 IP주소나 네트워크와의 매칭
->- --destination (-d) : 목적지 ip주소나 네트워크와의 매칭
->- --protocol (-p) : 특정 프로토콜과의 매칭
->- --in-interface (i) : 입력 인테페이스
->- --out-interface (-o) : 출력 인터페이스
->- --state : 연결 상태와의 매칭
->- --string : 애플리케이션 계층 데이터 바이트 순서와의 매칭
->- --comment : 커널 메모리 내의 규칙과 연계되는 최대 256바이트 주석
->- --syn (-y) : SYN 패킷을 허용하지 않는다.
->- --fragment (-f) : 두 번째 이후의 조각에 대해서 규칙을 명시한다.
->- --table (-t) : 처리될 테이블
->- --jump (-j) : 규칙에 맞는 패킷을 어떻게 처리할 것인가를 명시한다.
->- --match (-m) : 특정 모듈과의 매치
-
+> - --source (-s) : 출발지 IP주소나 네트워크와의 매칭
+> - --destination (-d) : 목적지 ip주소나 네트워크와의 매칭
+> - --protocol (-p) : 특정 프로토콜과의 매칭
+> - --in-interface (i) : 입력 인테페이스
+> - --out-interface (-o) : 출력 인터페이스
+> - --state : 연결 상태와의 매칭
+> - --string : 애플리케이션 계층 데이터 바이트 순서와의 매칭
+> - --comment : 커널 메모리 내의 규칙과 연계되는 최대 256바이트 주석
+> - --syn (-y) : SYN 패킷을 허용하지 않는다.
+> - --fragment (-f) : 두 번째 이후의 조각에 대해서 규칙을 명시한다.
+> - --table (-t) : 처리될 테이블
+> - --jump (-j) : 규칙에 맞는 패킷을 어떻게 처리할 것인가를 명시한다.
+> - --match (-m) : 특정 모듈과의 매치
+ 
 타겟
->- ACCEPT : 패킷을 받아들임.
->- DROP : 패킷을 버림(패킷이 전송된 적이 없던 것처럼).
->- REJECT : 패킷을 버리고 이와 동시에 적절한 응답 패킷을 전송.
->- LOG : 패킷을 syslog에 기록.
->- RETURN : 호출 체인 내에서 패킷 처리를 지속함.
+> - ACCEPT : 패킷을 받아들임.
+> - DROP : 패킷을 버림(패킷이 전송된 적이 없던 것처럼).
+> - REJECT : 패킷을 버리고 이와 동시에 적절한 응답 패킷을 전송.
+> - LOG : 패킷을 syslog에 기록.
+> - RETURN : 호출 체인 내에서 패킷 처리를 지속함.
 
 연결 추적(Connection Tracking)
->- NEW : 새로운 연결을 요청하는 패킷, 예, HTTP 요청
->- ESTABLISHED : 기존 연결의 일부인 패킷
->- RELATED : 기존 연결에 속하지만 새로운 연결을 요청하는 패킷, 예를 들면 접속 포트가 20인 수동 FTP의 경우 전송 포트는 사용되지 않은 1024 이상의 어느 포트라도 사용 가능하다.
->- INVALID : 연결 추적표에서 어디 연결에도 속하지 않은 패킷
+> - NEW : 새로운 연결을 요청하는 패킷, 예, HTTP 요청
+> - ESTABLISHED : 기존 연결의 일부인 패킷
+> - RELATED : 기존 연결에 속하지만 새로운 연결을 요청하는 패킷, 예를 들면 접속 포트가 20인 수동 FTP의 경우 전송 포트는 사용되지 않은 1024 이상의 어느 포트라도 사용 가능하다.
+> - INVALID : 연결 추적표에서 어디 연결에도 속하지 않은 패킷
 
 ㅁ iptables-save
 iptable에 내용을 저장할 수 있습니다. save라는 명령어지만 내부에 저장되지는 않아 output을 다른 파일로 저장해야 합니다.
->/sbin/iptables-save > /etc/iptables.rules
+> /sbin/iptables-save > /etc/iptables.rules
 
 만약 /etc/iptables.rules를 바로 수정했으면 위 명령어는 필요없습니다.
 
 ㅁ iptables-restore
 iptable-sava로 저장된 파일을 불러와서 iptables 내용을 다시 셋팅해줍니다.
->/sbin/iptables-restore < /etc/iptables.rules
+> /sbin/iptables-restore < /etc/iptables.rules
 
 예시
->iptables -I INPUT -s xxx.xxx.xxx.xxx -j DROP
+> iptables -I INPUT -s xxx.xxx.xxx.xxx -j DROP
 
->iptables -A INPUT -s xxx.xxx.xxx.xxx -j ACCEPT
+> iptables -A INPUT -s xxx.xxx.xxx.xxx -j ACCEPT
 
->iptables -A INPUT -p tcp --dport xxxx -j DROP
+> iptables -A INPUT -p tcp --dport xxxx -j DROP
 
->-A INPUT -p tcp -m state --state NEW -m tcp --dport 2022 -j ACCEPT //INPUT 체인에 state 모듈 상태가 NEW이고 프로토콜이 tcp이고 목적지 포트가 2022인 패킷에 대해 허용 추가
+> -A INPUT -p tcp -m state --state NEW -m tcp --dport 2022 -j ACCEPT //INPUT 체인에 state 모듈 상태가 NEW이고 프로토콜이 tcp이고 목적지 포트가 2022인 패킷에 대해 허용 추가
