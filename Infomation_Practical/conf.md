@@ -77,12 +77,12 @@ threshold:type <threshold|limit|both>,track <by src|by dst>, count \<c>, second 
 > - count | second  :  횟수와 시간
 
 > - limit 
-> limit은 seconds <s> 동안 count <c>만큼 까지만 로그를 발생시킨다.
+> limit은 seconds \<s> 동안 count \<c>만큼 까지만 로그를 발생시킨다.
 > threshold: type threshold, track by_src, count 7, seconds 60
 > 60초 동안 출발지를 기준으로 7번 까지만 탐지되며, 1분 동안 8번 초과하는 로그는 발생시키지 > 않는다.
 
 > - threshold
-> threshold는 seconds <s> 동안 count<c>가 달성될 때마다 로그를 발생시킨다.
+> threshold는 seconds \<s> 동안 count\<c>가 달성될 때마다 로그를 발생시킨다.
 > threshold: type threshold, track by_src, count 7, seconds 60
 > 60초동안 7번의 카운트 될때마다 로그를 발생시키기 때문에 2번의 로그가 발생한다.
 
@@ -167,33 +167,33 @@ threshold:type <threshold|limit|both>,track <by src|by dst>, count \<c>, second 
 아래 부터 디렉토리 제어이다.  Directory 구문에 대한 자세한 설명은 아래에 있다.
 시스템 루트( / ) 디렉토리에 대한 제어
 > \<Directory />                                              
-> \   Options FollowSymLinks                         
-> \   AllowOverride None                                
+>    Options FollowSymLinks                         
+>    AllowOverride None                                
 > \</Directory>                                              
 
 /usr/local/apache/htdocs 디렉토리에 대한 제어
 > \<Directory   " /usr/local/apache/htdocs">     
-> \    Options Indexes FollowSymLinks MultiViews
-> \    AllowOverride None
-> \    Order allow,deny
-> \    Allow from all
+>     Options Indexes FollowSymLinks MultiViews
+>     AllowOverride None
+>     Order allow,deny
+>     Allow from all
 > \</Directory>
 
 사용자 홈 디렉토리인 public_html 디렉토리에 대한 제어
 > \<Directory /home/*/public_html>
-> \   AllowOverride FileInfo AuthConfig Limit
-> \   Options MultiViews Indexes SymLinksIfOwnerMatch IncludesNoExec
-> \   <Limit GET POST OPTIONS PROPFIND>
-> \       Order allow,deny
-> \       Allow from all
-> \   </Limit>
-> \   <LimitExcept GET POST OPTIONS PROPFIND>
-> \       Order deny,allow
-> \       Deny from all
-> \   </LimitExcept>
+>    AllowOverride FileInfo AuthConfig Limit
+>    Options MultiViews Indexes SymLinksIfOwnerMatch IncludesNoExec
+>    \<Limit GET POST OPTIONS PROPFIND>
+>        Order allow,deny
+>        Allow from all
+>    \</Limit>
+>   \<LimitExcept GET POST OPTIONS PROPFIND>
+>        Order deny,allow
+>        Deny from all
+>    \</LimitExcept>
 > \</Directory>
 
-디렉토리 제어와 관련된 설정과 옵션 설명 디렉토리 제어문의 시작은 <Directory   DIR_Path> 로 시작해서 </Directory> 로 끝난다. 
+디렉토리 제어와 관련된 설정과 옵션 설명 디렉토리 제어문의 시작은 \<Directory   DIR_Path> 로 시작해서 \</Directory> 로 끝난다. 
 
 ####  Options(옵션) 설명
 : 옵션 구문은 Options 라는 키워드로 시작된다.
@@ -311,23 +311,23 @@ LogFormat "%{User-agent}i" agent
 문자열을 설정을 경우네는 " "안에 문자열을 설정하면 되고 내부 html 문서를 지정해줄 경우에는 문서의 경로를 지정해 주면 된다. 단, (/)최상위 경로는 DocumentRoot를 의미한다.
 
 > \<Location /server-status>
-> \   SetHandler server-status
-> \   Order deny,allow
-> \   Deny from all
-> \   Allow from .your_domain.com
+>    SetHandler server-status
+>    Order deny,allow
+>    Deny from all
+>    Allow from .your_domain.com
 > \</Location>
 > \<Location /server-info>
-> \   SetHandler server-info
-> \   Order deny,allow
-> \   Deny from all
-> \   Allow from .your_domain.com
+>    SetHandler server-info
+>    Order deny,allow
+>    Deny from all
+>    Allow from .your_domain.com
 > \</Location>          
 
 위의 설정을 함으로써 웹 브라우저에서 아파치 서버의 상태와 정보를 볼수 있다. 보안상 특정 호스트에서만 볼 수 있게 설정할 수 있으며 기본적으로 주석 처리되어 있다.
 
 > \<Location /cgi-bin/phf*>
-> \    Deny from all
-> \    ErrorDocument 403 http://phf.apache.org/phf_abuse_log.cgi
+>     Deny from all
+>     ErrorDocument 403 http://phf.apache.org/phf_abuse_log.cgi
 > \</Location>
 
 아파치 1.1 이전 버젼의 버그를 악용하는 경우가 있는데 이 설정에 해 두면 이러한 공격을 phf.apache.org의 로깅 스키립트로 리다이렉트 시켜준다. 요즘은 필요없는 설정이고 위의 URL에 cgi스크립트가 존재하지도 않는다.
@@ -337,7 +337,9 @@ LogFormat "%{User-agent}i" agent
 위의 설정 때문에 text 파일도 웹 브라우저에 표시해 줄수 있는 것이다.
 
 ***
+
 #### [Linux] iptables 설정
+
 ***
 
 iptable
