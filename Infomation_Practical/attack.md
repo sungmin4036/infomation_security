@@ -527,3 +527,11 @@ Ex. 게시판에 파일을 첨부/사용자 프로필에 사진을 업로드, SN
 #### 스턱스 넷
 : 원자력 발전소 작동을 방해한 악성코드 SCADA(Supervisory Control And Data Acquisition)시스템을 임의로 제어하는데 사용. 내부 폐쇄망에서 다른 시스템들로 유포하기 위해 여러 개의 취약점을 사용했다.   
 독일 지멘스 소프트웨어 구조를 정확하게 파악하여 관련 파일을 변조했다.
+
+
+#### DHCP Starvation
+: DHCP(Dynamic Host Configuration Protocol)를 대상으로 하는 공격으로 IP주소를 고갈시켜 서비스를 불가능하게 만든다.   
+> 다수의 클라이언트를 이용하여(또는 조작된 MAC을 통하여) DHCP discover 메세지를 보낸다.   
+> DHCP offer가 오면 DHCP request를 보내고, DHCP Ack까지 받아 실질적으로 IP를 할당받는다.   
+> 서버는 가지고 있는 IP가 소진되어 더이상 서비스를 할 수 없다.   
+> 해당 서버로 부터 IP를 받아야 하는 정상적인 클라이언트가 IP를 할당 받을 수 없다.   
