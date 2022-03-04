@@ -1,12 +1,21 @@
 [1. INJECTION ATTACKS (인젝션)](#1.-injection-attacks-(인젝션))
+
 [2. BROKEN AUTHENTICATION (취약한 인증)](#2.-broken-authentication-(취약한-인증))
+
 [3. SENSITIVE DATA EXPOSURE (민감 데이터 노출)](#3.-sensitive-data-exposure-(민감-데이터-노출))
+
 [4. XML EXTERNAL ENTITIES (XML 외부 개체(XXE))](#4.-xml-external-entities-(XML-외부-개체(XXE)))
+
 [5. BROKEN ACCESS CONTROL (취약한 접근 통제)](#5.-broken-access-control-(취약한-접근-통제))
+
 [6. SECURITY MISCONFIGURATION (잘못된 보안 구성)](#6.-security-misconfiguration-(잘못된-보안-구성))
+
 [7. CROSS-SITE SCRIPTING (XSS)](#7.-cross-site-scripting-(XSS))
+
 [8. INSECURE DESERIALIZATION (안전하지 않은 역직렬화)](#8.-insecure-deserializtion-(안전하지-않은-역직렬화))
+
 [9. USING COMPONENTS WITH KNOWN VULNERABILITIES (알려진 취약점이 있는 구성요소 사용)](#9.-usting-components-with-known-vulnerabilities-(알려진-취약점이-있는-구성요소-사용))
+
 [10.  INSUFFICIENT LOGGING AND MONITORING (불충분한 로깅과 모니터링)](#10.-insufficient-logging-and-monitoring-(불충분한-로깅과-모니터링))
 
 ---
