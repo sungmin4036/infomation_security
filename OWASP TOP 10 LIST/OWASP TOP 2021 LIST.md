@@ -1,4 +1,4 @@
-[1. INJECTION ATTACKS (인젝션)](#1.-injection-attacks-(인젝션))
+[1. INJECTION ATTACKS (인젝션)](#1.-injection-attacks(인젝션))
 
 [2. BROKEN AUTHENTICATION (취약한 인증)](#2.-broken-authentication-(취약한-인증))
 
@@ -20,7 +20,7 @@
 
 ---
 
-1. INJECTION ATTACKS (인젝션)
+1. INJECTION ATTACKS(인젝션)
 
 주입 공격은 공격자가 악성 코드를 응용 프로그램에 입력함으로써 데이터 또는 전체 응용 프로그램을 손상시키는 명령을 강제로 실행하는 것을 말합니다. 가장 일반적인 유형의 주입 공격은 SQL 주입 및 사이트 간 스크립팅(XSS) 공격이지만 코드 주입, 명령 주입, CCS 주입 등도 있습니다.
 SQL 주입은 사용자 입력에서 메타 문자의 마스킹 또는 유효성 검사 부족으로 인해 발생하는 SQL 데이터베이스 취약성을 공격하는 것을 의미합니다.
