@@ -1,5 +1,5 @@
 
-[로그란?](https://github.com/sungmin4036/infomation_security/blob/main/etc/log%EB%9E%80%3F.md)
+[로그에 대한 기본 지식](https://github.com/sungmin4036/infomation_security/blob/main/etc/log%EB%9E%80%3F.md)
 
 ---
 
