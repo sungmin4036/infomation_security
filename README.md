@@ -14,6 +14,7 @@
   > - 시험 리스트
 
 - OWASP TOP 10 LIST
+> - [2021 OWASP TOP 10 LIST](https://github.com/sungmin4036/infomation_security/blob/main/OWASP%20TOP%2010%20LIST/OWASP%20TOP%202021%20LIST.md)
 
 <br>
 
