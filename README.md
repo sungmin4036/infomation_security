@@ -2,7 +2,7 @@
 공부하기용 정보보안 정리
 
 - 정보보안 실기
-  > - 암기
+  > - [암기](https://github.com/sungmin4036/infomation_security/blob/main/Infomation_Practical/%EC%95%94%EA%B8%B0.md)
   > - 공격 종류
   > - 리눅스 보안 설정
   > - 시험 리스트
