@@ -56,13 +56,28 @@ log4j가 설치된 경로의 pom.xml 파일을 열어 "log4j-core"로 검색
   - JAVA사용 버전에 따라 최신 LOG4j 버전으로 업데이트 수행
 
   - 즉시 업데이트가 어려운 경우 log4j 버전 따른 해결 방안 
-    - CVE-2021-44228, CVE-2021-45046 : JndiLookup 클래스를 경로에서 제거
+
+```
+zip : 압축하는 리눅스 명령어
+
+-d : 특정경로의 class를 delete 한다. 
+
+-q : 메세지 출력 제한 옵션이다. 
+```
+
+  - log4j-2.x 버전 ] CVE-2021-44228, CVE-2021-45046 : JndiLookup 클래스를 경로에서 제거
     
-    \* zip -q -d log4j-core-*.jar org/apache/logging/log4j/core/lookup/JndiLookup.class
+    - zip -q -d log4j-core-*.jar org/apache/logging/log4j/core/lookup/JndiLookup.class
 
-    \*  log4j-core JAR 파일 없이 log4j-api JAR파일만 사용하는 경우 취약점의 영향 받지 않음
+    - log4j-core JAR 파일 없이 log4j-api JAR파일만 사용하는 경우 취약점의 영향 받지 않음
 
-    - CVE-2021-4104 : JMSAppender 사용 확인 후 코드 수정 또는 삭제
+
+
+  - log4j-1.2.x 버전] CVE-2021-4104 : JMSAppender 사용 확인 후 코드 수정 또는 삭제
+
+    - zip -d log4j-1.2.12.jar org/apache/log4j/net/JMSAppender.class  
+
+    - zip -d log4j-1.2.*.jar org/apache/log4j/net/JMSAppender.class (* 모든버전일괄)
 
 
 
@@ -75,6 +90,15 @@ log4j가 설치된 경로의 pom.xml 파일을 열어 "log4j-core"로 검색
 
 
 ---
+
+![image](https://user-images.githubusercontent.com/62640332/160333695-05063e41-e79f-43ba-81c3-ef50c793ce60.png)
+
+
+
+
+
+---
+
 
 ### ㅁ JNDI
 
