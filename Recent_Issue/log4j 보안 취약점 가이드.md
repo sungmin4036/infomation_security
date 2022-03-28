@@ -65,9 +65,26 @@ log4j가 설치된 경로의 pom.xml 파일을 열어 "log4j-core"로 검색
     - CVE-2021-4104 : JMSAppender 사용 확인 후 코드 수정 또는 삭제
 
 
+
+
 <br>
 
 - 보안 업데이트 안되있을시 발생할수 있는것
 
 : 원격의 공격자가 이 취약점을 이요하여 악성코드 유포, 중요 데이터 탕취, 임의의 파일 다운로드 및 실행 가능.
+
+
+---
+
+### ㅁ JNDI
+
+: JNDI 는 Java Naming and Directory Interface의 약자로 클라이언트가 서버상의 데이터나 객체를 lookup 할 수 있는 Java API
+
+찾고자 하는 객체에 접근 할 수 있는 단일의 인터페이스를 제공하며 이 API를 이용해서 객체를 lookup, querying 그리고 binding 할 수 있다.
+
+예로 아래와 같은 소스코드가 실행이 가능하다 
+
+```
+DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/datasource"); assertNotNull(ds.getConnection());
+```
 
