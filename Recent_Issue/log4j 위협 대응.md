@@ -1,4 +1,5 @@
 [로그에 대한 기본 지식](https://github.com/sungmin4036/infomation_security/blob/main/etc/log%EB%9E%80%3F.md)
+[log4j 보안 취약점 가이드](https://github.com/sungmin4036/infomation_security/blob/main/Recent_Issue/log4j%20%EB%B3%B4%EC%95%88%20%EC%B7%A8%EC%95%BD%EC%A0%90%20%EA%B0%80%EC%9D%B4%EB%93%9C.md)
 
 
 
