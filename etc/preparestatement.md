@@ -9,41 +9,15 @@
 PreparedStatement 와 Statement
 
 
-
-
-
-
-
 * PreparedStatement 와 Statement의 가장 큰 차이점은 캐시(cache) 사용여부이다.
-
-
 
 1) 쿼리 문장 분석
 
-
-
 2) 컴파일
-
-
 
 3) 실행
 
-
-
-
-
-
-
 Statement를 사용하면 매번 쿼리를 수행할 때마다 1) ~ 3) 단계를 거치게 되고, PreparedStatement는 처음 한 번만 세 단계를 거친 후 캐시에 담아 재사용을 한다는 것이다. 만약 동일한 쿼리를 반복적으로 수행한다면 PreparedStatment가 DB에 훨씬 적은 부하를 주며, 성능도 좋다.
-
-
-
-
-
-
-
-
-
 
 
 1. Statement 
@@ -69,193 +43,76 @@ sqlstr를 실행시 결과값을 생성
 Statement  executeQuery() 나 executeUpdate() 를 실행하는 시점에 파라미터로 SQL문을 전달하는데, 이 때 전달되는 SQL 문은 완성된 형태로 한눈에 무슨 SQL 문인지 파악하기 쉽다. 하지만, 이 녀석은 SQL문을 수행하는 과정에서 매번 컴파일을 하기 때문에 성능상 이슈가 있다. 
 
 
-
-
-
-
-
 2. PreparedStatement 
 
 
 
 String sqlstr = "SELECT name, memo FROM TABLE WHERE num = ? " 
 
-
-
 PreparedStatement stmt = conn.prepareStatement(sqlstr); 
-
-
 
 pstmt.setInt(1, num);
 
-
-
 ResultSet rst = pstmt.executeQuerey(); 
 
-
-
 sqlstr 은 생성시에 실행
-
-
 
 PreparedStatement 은 이름에서부터 알 수 있듯이 준비된 Statement 이다. 이 준비는 컴파일(Parsing) 을 이야기하며, 컴파일이 미리 되어있는 녀석이기에 Statement 에 비해 성능상 이점이 있다. 요 녀석은 보통 조건절과 함께 사용되며 재사용이 되는데, ? 부분에만 변화를 주어 지속적으로 SQL을 수행하기 때문에 한눈에 무슨 SQL 문인지 파악하기는 어렵다.
 
 
-
-
-
-
-
 2.와 같이 이용할 경우 해당 인자만 받아서 처리하는 구조로 갈 수 있는것입니다.내부적으로 상세하게 뜯어 보지는 않았지만, 2.는 생성시 메모리에 올라가게 되므로 동일한 쿼리의 경우 인자만 달라지게 되므로, 매번 컴파일 되지 않아도 된다는 결론이 날듯 합니다. 
-
-
-
-
-
-
 
 3. API
 
-
-
 (1) Preparedstatement
-
-
 
 public interface PreparedStatement extends Statement 
 
-
-
 프리컴파일 된 SQL 문을 나타내는 오브젝트입니다. PreparedStatement 는 Statement를 상속받고 있습니다. 
 
-
-
 SQL 문은 프리컴파일 되어 PreparedStatement 오브젝트에 저장됩니다. 거기서, 이 오브젝트는 이 문장을 여러 차례 효율적으로 실행하는 목적으로 사용할 수 있습니다. 
-
-
-
-
-
-
 
 (2) Statement
 
 
-
 public interface Statement 
-
-
 
 정적 SQL 문을 실행해, 작성된 결과를 돌려주기 위해서(때문에) 사용되는 오브젝트입니다. 
 
-
-
 디폴트에서는 Statement 오브젝트 마다 1 개의 ResultSet 오브젝트만이 동시에 오픈할 수 있습니다. 따라서, 1 개의 ResultSet 오브젝트의 read가, 다른 read에 의해 끼어들어지면(자), 각각은 다른 Statement 오브젝트에 의해 생성된 것이 됩니다. Statement 인터페이스의 모든 execution 메소드는 문장의 현재의 ResultSet 오브젝트로 오픈되고 있는 것이 존재하면, 그것을 암묵에 클로우즈 합니다. 
-
-
 
 그리고 FOR 문등을 통하여 동일한 SELECT 를 여러번 실행해야 하는 경우에는, 그 사용성에 볼때 2번이 훨씬 효과적이라고 볼 수 있습니다. 
 
 
-
-
-
-
-
 (3) 예제
-
-
 
 1) Statement 
 
-
-
+```
 String sqlstr = null; 
-
-
-
 Statement stmt = null; 
-
-
-
 ResultSet rst = null; 
-
-
-
-
-
-
-
 FOR(int i=0; i< 100 ; i++){ 
-
-
-
-sqlstr = "SELECT name, memo FROM TABLE WHERE num = " + i 
-
-
-
+    sqlstr = "SELECT name, memo FROM TABLE WHERE num = " + i 
 stmt = conn.credateStatement(); 
-
-
-
 rst = stmt.executeQuerey(sqlstr); 
-
-
-
-} 
-
-
-
-
-
+```
 
 
 2) PreparedStatement
 
 
-
+```
 String sqlstr = null; 
-
-
-
 PreparedStatement pstmt = null; 
-
-
-
 ResultSet rst = null; 
-
-
-
-
-
-
-
 sqlstr = "SELECT name, memo FROM TABLE WHERE num = ? " 
-
-
-
 pstmt = conn.prepareStatement(sqlstr); 
-
-
-
-
-
-
-
 FOR(int i=0; i< 100 ; i++){ 
-
-
-
-pstmt.setInt(1, i); 
-
-
-
-rst = pstmt.executeQuerey(); 
-
-
-
+    pstmt.setInt(1, i); 
+    rst = pstmt.executeQuerey(); 
 }
-
+```
 
 
 
