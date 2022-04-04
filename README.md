@@ -38,4 +38,4 @@
   - [log4j 보안 취약점 가이드](https://github.com/sungmin4036/infomation_security/blob/main/Recent_Issue/log4j%20%EB%B3%B4%EC%95%88%20%EC%B7%A8%EC%95%BD%EC%A0%90%20%EA%B0%80%EC%9D%B4%EB%93%9C.md)
   - [log4j 위협 대응](https://github.com/sungmin4036/infomation_security/blob/main/Recent_Issue/log4j%20%EC%9C%84%ED%98%91%20%EB%8C%80%EC%9D%91.md)
   - [WannaCry 랜섬웨어](https://github.com/sungmin4036/infomation_security/blob/main/Recent_Issue/WannaCry_%EB%9E%9C%EC%84%AC%EC%9B%A8%EC%96%B4.md)
-  - [EDR, EPP, XDR, SASE](https://github.com/sungmin4036/infomation_security/commit/957dcef9b4b1b07c9321a8071e4eb45fc3f3a061)]
+  - [EDR, EPP, XDR, SASE](https://github.com/sungmin4036/infomation_security/blob/main/Recent_Issue/EDR%2C%20EPP%2C%20XDR%2C%20SASE.md)

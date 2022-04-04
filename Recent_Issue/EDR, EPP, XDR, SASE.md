@@ -1,11 +1,11 @@
-[SASE(Secure Access Service Edge)](#ㅁ-sasesecure-access-service-edge)
-[엔드 포인트 보호 플랫폼 (EPP)](#ㅁ-엔드-포인트-보호-플랫폼-epp)
-[엔드 포인트 탐지 및 대응 (EDR)](#ㅁ-엔드-포인트-탐지-및-대응-edr)
-[XDR(eXtended Detection & Response)](#ㅁ-xdrextended-detection--response)
-[EPP와 EDR의 차이점은 무엇입니까?](#ㅁ-epp와-edr의-차이점은-무엇입니까)
-[EDR과 XDR의 차이점은 무엇입니까?](#ㅁ-edr과-xdr의-차이점은-무엇입니까)
-[조직이 XDR 솔루션을 선택하는 이유](#ㅁ-조직이-xdr-솔루션을-선택하는-이유)
-[XDR의 한계는 무엇입니까?](#ㅁ-xdr의-한계는-무엇입니까)
+- [ㅁ SASE(Secure Access Service Edge)](#ㅁ-sasesecure-access-service-edge)
+- [ㅁ 엔드 포인트 보호 플랫폼 (EPP)](#ㅁ-엔드-포인트-보호-플랫폼-epp)
+- [ㅁ 엔드 포인트 탐지 및 대응 (EDR)](#ㅁ-엔드-포인트-탐지-및-대응-edr)
+- [ㅁ XDR(eXtended Detection & Response)](#ㅁ-xdrextended-detection--response)
+- [ㅁ EPP와 EDR의 차이점은 무엇입니까?](#ㅁ-epp와-edr의-차이점은-무엇입니까)
+- [ㅁ EDR과 XDR의 차이점은 무엇입니까?](#ㅁ-edr과-xdr의-차이점은-무엇입니까)
+- [ㅁ 조직이 XDR 솔루션을 선택하는 이유](#ㅁ-조직이-xdr-솔루션을-선택하는-이유)
+- [ㅁ XDR의 한계는 무엇입니까?](#ㅁ-xdr의-한계는-무엇입니까)
 
 ---
 
