@@ -1,6 +1,6 @@
 
-[로그에 대한 기본 지식](https://github.com/sungmin4036/infomation_security/blob/main/etc/log%EB%9E%80%3F.md)       
-[log4j 위협 대응](https://github.com/sungmin4036/infomation_security/blob/main/Recent_Issue/log4j%20%EC%9C%84%ED%98%91%20%EB%8C%80%EC%9D%91.md)
+- [로그에 대한 기본 지식](https://github.com/sungmin4036/infomation_security/blob/main/etc/log%20%EC%A0%95%EC%9D%98.md)       
+- [log4j 위협 대응](https://github.com/sungmin4036/infomation_security/blob/main/Recent_Issue/log4j%20%EC%9C%84%ED%98%91%20%EB%8C%80%EC%9D%91.md)
 ---
 
 - log4j란?
